@@ -39,6 +39,8 @@ public class CesarSript {
         } else {
             newCharNum = charPlusNum;
         }
+
+        //дописать сюда что будет если ввести shift < 0!
         return alphabet[newCharNum];
     }
 }
