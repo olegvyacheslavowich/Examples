@@ -1,5 +1,7 @@
 package kz.karpenko.ok;
 
+import java.util.ArrayList;
+
 /**
  * Created by Олег on 21.01.2017.
  * Метод шифрования Цезаря
@@ -8,25 +10,33 @@ package kz.karpenko.ok;
  * Требует доработок, но в целом пользоваться можно)
  */
 public class CesarSript {
+    private String language;
     private String word;
     private int shift;
-    private char alphabet[] = new char[]{
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    private ArrayList<Character> alphabet = new ArrayList<>();
 
-    public CesarSript(String word, int shift) {
+    public CesarSript(String language, String word, int shift) {
+        this.language = language;
         this.word = word;
         this.shift = shift;
-    }
 
+        if (language.equals("RUS")) {
+            for (char c = 'А'; c <= 'Я'; c++)
+                alphabet.add(c);
+        } else if (language.equals("ENG"))
+            for (char c = 'A'; c <= 'Z'; c++)
+                alphabet.add(c);
+        System.out.println(alphabet);
+    }
 
     public String encrypt() {
         String encodedWord = "";
         for (int j = 0; j < word.length(); j++) {
-            for (int i = 0; i < alphabet.length; i++) {
-                if (alphabet[i] == word.charAt(j)) {
-                    encodedWord += getShiftedChar(i);
-                }
-            }
+            char charAtWord = word.charAt(j);
+            System.out.println(word.charAt(j));
+            int index = alphabet.indexOf(charAtWord); // we're get char's number in the alphabet
+            encodedWord += getShiftedChar(index);
+            System.out.println(encodedWord);
         }
         return encodedWord;
     }
@@ -34,13 +44,13 @@ public class CesarSript {
     private char getShiftedChar(int charNum) {
         int charPlusNum = charNum + shift;
         int newCharNum = 0;
-        if (alphabet.length < charPlusNum) {
-            newCharNum = charPlusNum - alphabet.length;
+        if (alphabet.size() < charPlusNum) {
+            newCharNum = charPlusNum - alphabet.size();
         } else {
             newCharNum = charPlusNum;
         }
-
+        System.out.println(newCharNum);
         //дописать сюда что будет если ввести shift < 0!
-        return alphabet[newCharNum];
+        return alphabet.get(newCharNum);
     }
 }
