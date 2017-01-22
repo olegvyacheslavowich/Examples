@@ -12,13 +12,13 @@ import java.util.ArrayList;
 public class CesarSript {
     private String language;
     private String word;
-    private int shift;
+    private int key;
     private ArrayList<Character> alphabet = new ArrayList<>();
 
-    public CesarSript(String language, String word, int shift) {
+    public CesarSript(String language, String word, int key) {
         this.language = language;
         this.word = word;
-        this.shift = shift;
+        this.key = key;
 
         if (language.equals("RUS")) {
             for (char c = 'А'; c <= 'Я'; c++)
@@ -26,30 +26,26 @@ public class CesarSript {
         } else if (language.equals("ENG"))
             for (char c = 'A'; c <= 'Z'; c++)
                 alphabet.add(c);
-        System.out.println(alphabet);
     }
 
-    public String encrypt() {
+    public String encrypt() throws ArrayIndexOutOfBoundsException {
         String encodedWord = "";
         for (int j = 0; j < word.length(); j++) {
             char charAtWord = word.charAt(j);
-            System.out.println(word.charAt(j));
             int index = alphabet.indexOf(charAtWord); // we're get char's number in the alphabet
             encodedWord += getShiftedChar(index);
-            System.out.println(encodedWord);
         }
         return encodedWord;
     }
 
     private char getShiftedChar(int charNum) {
-        int charPlusNum = charNum + shift;
+        int charPlusNum = charNum + key;
         int newCharNum = 0;
         if (alphabet.size() < charPlusNum) {
             newCharNum = charPlusNum - alphabet.size();
         } else {
             newCharNum = charPlusNum;
         }
-        System.out.println(newCharNum);
         //дописать сюда что будет если ввести shift < 0!
         return alphabet.get(newCharNum);
     }
